@@ -6,7 +6,7 @@
 using namespace std;
 class data {
 protected:
-    double  x_table[20][3] = { { 1, 8, 7 }, { 2, 8, 7 }, { 0, 8, 7 }, { 1, 5, 6 }, { 1, 9, 7 }, { 1, 8, 10 }, { 1, 8, 6 }, { 2, 8, 6 }, { 2, 8, 1 }, { 0, 9, 3}, { 0, 8, 9 }, { 0, 5, 7 }, { 0, 9, 7 }, { 1, 8, 9 }, { 1, 7, 8 }, { 2, 9, 7 }, { 2, 9, 10 }, { 2, 6, 7 }, { 3, 8, 6 }, { 1, 8, 5 }};
+    double  x_table[20][3] = { { 1, 8, 7 }, { 2, 8, 7 }, { 0, 8, 7 }, { 1, 5, 6 }, { 1, 9, 7 }, { 1, 8, 10 }, { 1, 8, 6 }, { 2, 8, 6 }, { 2, 8, 1 }, { 0, 9, 3}, { 0, 8, 9 }, { 0, 5, 7 }, { 0, 9, 7 }, { 1, 8, 9 }, { 1, 7, 8 }, { 2, 9, 7 }, { 2, 9, 10 }, { 2, 6, 7 }, { 3, 8, 6 }, { 1, 8, 5 } };
     double x1_table[20][3];
     double d1_table[20];
     double d11[20];
@@ -26,8 +26,8 @@ protected:
     int index_mass[20];
     double function(double x1, double x2, double x3)
     {
-        return pow(x1,3) + sqrt(x2) - pow(x3,4);
-       // return sin(x1) + tan(x2) - tan(x3);
+        return pow(x1, 3) + sqrt(x2) - pow(x3, 4);
+        // return sin(x1) + tan(x2) - tan(x3);
     }
     short get_d2(double d1)
     {
@@ -121,7 +121,7 @@ protected:
         {
             while (flag1)
             {
-                rnd = rand() % (19 - 0 + 1) + 0; 
+                rnd = rand() % (19 - 0 + 1) + 0;
                 while (tmp < i && flag)
                 {
                     if (rnd == index_mass[tmp])
@@ -217,7 +217,7 @@ public:
         double sum_error = 0;
         if (q == 0)
         {
-            cout << "X1 " << "  X2" << "  X3" << "  T1" << "  Y1" << "  T2" << " Y2" << endl;
+            cout << " X1 " << "  X2" << "    X3" << "     T1" << "        Y1" << "      T2" << "      Y2" << endl;
         }
         //hiden_result
         for (int i = 0; i < n; i++)
@@ -236,12 +236,12 @@ public:
             error_hiden3 = error_output1 * hiden_layer3[0] + error_output2 * hiden_layer3[1];
             if (q == 0)
             {
-                cout << navch_vybir[i][0] << "  " << navch_vybir[i][1] << "  " << navch_vybir[i][2] << "  " << navch_vybir[i][3] << "  " << result_outputLayer1 << "  " << navch_vybir[i][4] << "  " << result_outputLayer2 << endl;
+                cout << setw(2)<<navch_vybir[i][0] << "  " << setw(2)<<navch_vybir[i][1] << "  " << setw(2) << navch_vybir[i][2] << "  " << setw(3) << fixed << setprecision(3) << navch_vybir[i][3] << "  " << setw(3) << fixed << setprecision(3) << result_outputLayer1 << "  " << setw(3) << fixed << setprecision(3) << navch_vybir[i][4] << "  " << setw(3) << fixed << setprecision(3) << result_outputLayer2 << endl;
                 sum_error += pow(navch_vybir[i][3] - result_outputLayer1, 2);
                 sum_error += pow(navch_vybir[i][4] - result_outputLayer2, 2);
             }
         }
-        if (q == 0)
+        if (q == 0) 
         {
             cout << sum_error / 16 << endl;
         }
@@ -249,12 +249,12 @@ public:
     }
     NW train()
     {
-       int time = clock();
-       for (int epoch = 0; epoch < 100000; epoch++)
-       {
-           for(int i = 16; i > -1; i--)
-           {
-                 get_result(i,1);
+        int time = clock();
+        for (int epoch = 0; epoch < 100000; epoch++)
+        {
+            for (int i = 16; i > -1; i--)
+            {
+                get_result(i, 1);
                 //input layer
                 input_layer1[0] = input_layer1[0] + eta * error_hiden1 * derivative(input_layer1[0] * navch_vybir[i][0] + input_layer2[0] * navch_vybir[i][1] + input_layer3[0] * navch_vybir[i][2]) * navch_vybir[i][0];
                 input_layer2[0] = input_layer2[0] + eta * error_hiden1 * derivative(input_layer1[0] * navch_vybir[i][0] + input_layer2[0] * navch_vybir[i][1] + input_layer3[0] * navch_vybir[i][2]) * navch_vybir[i][1];
@@ -272,14 +272,15 @@ public:
                 hiden_layer1[1] = hiden_layer1[1] + eta * error_output2 * derivative(hiden_layer1[1] * result_hidenLayer1 + hiden_layer2[1] * result_hidenLayer2 + hiden_layer3[1] * result_hidenLayer3) * result_hidenLayer1;
                 hiden_layer2[1] = hiden_layer2[1] + eta * error_output2 * derivative(hiden_layer1[1] * result_hidenLayer1 + hiden_layer2[1] * result_hidenLayer2 + hiden_layer3[1] * result_hidenLayer3) * result_hidenLayer2;
                 hiden_layer3[1] = hiden_layer3[1] + eta * error_output2 * derivative(hiden_layer1[1] * result_hidenLayer1 + hiden_layer2[1] * result_hidenLayer2 + hiden_layer3[1] * result_hidenLayer3) * result_hidenLayer3;
-           }
-       }
+            }
+        }
         cout << "Time = " << clock() - time << endl;
         return *this;
     }
     NW control()
     {
         //hiden_result
+        cout << " X1 " << "  X2" << "    X3" << "     T1" << "        Y1" << "      T2" << "      Y2" << endl;
         double sum_error = 0;
         for (int i = 0; i < 4; i++)
         {
@@ -288,7 +289,7 @@ public:
             result_hidenLayer3 = activation_func(this->input_layer1[2] * control_vybir[i][0] + this->input_layer2[2] * control_vybir[i][1] + this->input_layer3[2] * control_vybir[i][2]);
             result_outputLayer1 = activation_func(this->hiden_layer1[0] * result_hidenLayer1 + hiden_layer2[0] * result_hidenLayer2 + hiden_layer3[0] * result_hidenLayer3);
             result_outputLayer2 = activation_func(this->hiden_layer1[1] * result_hidenLayer1 + hiden_layer2[1] * result_hidenLayer2 + hiden_layer3[1] * result_hidenLayer3);
-            cout << control_vybir[i][0] << "  " << control_vybir[i][1] << "  " << control_vybir[i][2] << "  " << control_vybir[i][3] << "  " << result_outputLayer1 << "  " << control_vybir[i][4] << "  " << result_outputLayer2 << endl;
+            cout << setw(2) << control_vybir[i][0] << "  " << setw(2) << control_vybir[i][1] << "  " << setw(2) << control_vybir[i][2] << "  " << setw(3) << fixed << setprecision(3) << control_vybir[i][3] << "  " << setw(3) << fixed << setprecision(3) << result_outputLayer1 << "  " << setw(3) << fixed << setprecision(3) << navch_vybir[i][4] << "  " << setw(3) << fixed << setprecision(3) << result_outputLayer2 << endl;
             sum_error += pow(control_vybir[i][3] - result_outputLayer1, 2);
             sum_error += pow(control_vybir[i][4] - result_outputLayer2, 2);
         }
@@ -301,9 +302,9 @@ public:
             result_hidenLayer3 = activation_func(this->input_layer1[2] * control_vybir[i][0] + this->input_layer2[2] * control_vybir[i][1] + this->input_layer3[2] * control_vybir[i][2]);
             result_outputLayer1 = activation_func(this->hiden_layer1[0] * result_hidenLayer1 + hiden_layer2[0] * result_hidenLayer2 + hiden_layer3[0] * result_hidenLayer3);
             result_outputLayer2 = activation_func(this->hiden_layer1[1] * result_hidenLayer1 + hiden_layer2[1] * result_hidenLayer2 + hiden_layer3[1] * result_hidenLayer3);
-            cout << x1_table[index_mass[i+15]][0] << "  " << x1_table[index_mass[i+15]] [1] << "  " << x1_table[index_mass[i+15]][2] << "  " << d11[index_mass[i+15]] << "  " << this->de_norm(result_outputLayer1) << "  " << control_vybir[i][4] << "  " << result_outputLayer2 << endl;
+            cout << x1_table[index_mass[i + 15]][0] << "  " << x1_table[index_mass[i + 15]][1] << "  " << x1_table[index_mass[i + 15]][2] << "  " << d11[index_mass[i + 15]] << "  " << this->de_norm(result_outputLayer1) << "  " << control_vybir[i][4] << "  " << result_outputLayer2 << endl;
         }
-        
+
         return *this;
     }
     NW interface()
